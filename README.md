@@ -1,7 +1,7 @@
 # KVM Switch Patch
 
 ## Overview
-My KVM switch didn't work properly with a ThinkPad dock as it does not spoof EDIDs. The display works through the switch when the machine is booted, but once switched it cannot be switched back. This patch works around this issue wehn using a monitor with multiple inputs. If the switch is triggered, USB devices are disconnected. When this occurs, the patch switches off the display temporarily which causes the monitor to switch inputs.
+My KVM switch didn't work properly with a ThinkPad dock as it does not spoof EDIDs. The display works through the switch when the machine is booted, but once switched it cannot be switched back. This patch works around this issue when using a monitor with multiple inputs. If the switch is triggered, USB devices are disconnected. When this occurs, the patch switches off the display temporarily which causes the monitor to switch inputs.
 
 
 ## Setup
