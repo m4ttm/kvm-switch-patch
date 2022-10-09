@@ -14,4 +14,4 @@ Change the "target_device" variable to be more specific so it will only switch o
 - Scroll to the bottom and add the following line (after all the #'s):
 `@reboot python3 /bin/kvmPatch.py &`
 - Test it
-sudo reboot
+`sudo reboot`
