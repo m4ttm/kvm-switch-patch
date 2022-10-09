@@ -8,10 +8,10 @@ My KVM switch didn't work properly with a ThinkPad dock as it does not spoof EDI
 - Specify your target device (Optional)
 Change the "target_device" variable to be more specific so it will only switch off the display when a specific device connected through the switch is removed
 - Copy the Python file to /bin:
-sudo cp -i kvmPatch.py /bin
+`sudo cp -i kvmPatch.py /bin``
 - Add A New Cron Job:
-crontab -e
+`crontab -e`
 - Scroll to the bottom and add the following line (after all the #'s):
-@reboot python3 /bin/kvmPatch.py &
+`@reboot python3 /bin/kvmPatch.py &`
 - Test it
 sudo reboot
