@@ -7,7 +7,7 @@ import copy
 
 target_device = "Device('/sys/devices/pci0000:00/"
 
-DESKTOP = 'xorg'
+DESKTOP = 'xorga'
 
 if DESKTOP == 'xorg':
     onRemove = ["/usr/bin/xset", "-display", ":1.0", "dpms", "force", "off"]
@@ -17,20 +17,20 @@ if DESKTOP == 'xorg':
 else:
     onRemove = [
         "/usr/bin/busctl", "--user", "set-property",
-        " org.gnome.Mutter.DisplayConfig", " /org/gnome/Mutter/DisplayConfig",
-        "org.gnome.Mutter.DisplayConfig", " PowerSaveMode", " i", " 1"
+        "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
+        "org.gnome.Mutter.DisplayConfig", "PowerSaveMode", " i", " 1"
     ]
 afterOnRemove = [
     "/usr/bin/busctl", " --user", " set-property",
-    " org.gnome.Mutter.DisplayConfig", " /org/gnome/Mutter/DisplayConfig",
-    " org.gnome.Mutter.DisplayConfig", " PowerSaveMode", " i", " 0"
+    "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
+    "org.gnome.Mutter.DisplayConfig", "PowerSaveMode", " i", " 0"
 ]
 
 
 def swap_screens():
-    subprocess.run(onRemove)
+    subprocess.run(onRemove, shell=True)
     time.sleep(10)
-    subprocess.run(afterOnRemove)
+    subprocess.run(afterOnRemove, shell=True)
 
 
 def main():
