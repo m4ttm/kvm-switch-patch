@@ -5,10 +5,22 @@ import pyudev
 import subprocess
 import copy
 
-
 target_device = "Device('/sys/devices/pci0000:00/"
-onRemove = ["/usr/bin/xset", "-display", ":1.0", "dpms", "force", "off"]
-afterOnRemove = ["/usr/bin/xset", "-display", ":1.0", "dpms", "force", "on"]
+
+DESKTOP = 'xorg'
+
+if DESKTOP == 'xorg':
+    onRemove = ["/usr/bin/xset", "-display", ":1.0", "dpms", "force", "off"]
+    afterOnRemove = [
+        "/usr/bin/xset", "-display", ":1.0", "dpms", "force", "on"
+    ]
+else:
+    onRemove = [
+        "/usr/bin/busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1"
+    ]
+afterOnRemove = [
+    "/usr/bin/busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0"
+]
 
 
 def swap_screens():
@@ -30,7 +42,7 @@ def main():
             monitor.start()
 
             for device in iter(monitor.poll, None):
-                if device.action=='remove':
+                if device.action == 'remove':
                     if target_device in str(device):
                         swap_screens()
                         break
@@ -43,4 +55,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
