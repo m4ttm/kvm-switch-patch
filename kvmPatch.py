@@ -7,7 +7,7 @@ import copy
 
 target_device = "Device('/sys/devices/pci0000:00/"
 
-DESKTOP = 'xorga'
+DESKTOP = 'wayland'
 
 if DESKTOP == 'xorg':
     onRemove = ["/usr/bin/xset", "-display", ":1.0", "dpms", "force", "off"]
@@ -15,16 +15,12 @@ if DESKTOP == 'xorg':
         "/usr/bin/xset", "-display", ":1.0", "dpms", "force", "on"
     ]
 else:
+    # Activate screen saver, added bonus of locking with password
     onRemove = [
-        "/usr/bin/busctl", "--user", "set-property",
-        "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
-        "org.gnome.Mutter.DisplayConfig", "PowerSaveMode", " i", " 1"
+        "dbus-send --session --dest=org.gnome.ScreenSaver --type=method_call \
+          /org/gnome/ScreenSaver org.gnome.ScreenSaver.SetActive boolean:true"
     ]
-afterOnRemove = [
-    "/usr/bin/busctl", " --user", " set-property",
-    "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
-    "org.gnome.Mutter.DisplayConfig", "PowerSaveMode", " i", " 0"
-]
+afterOnRemove = ["echo", "placeholder"]
 
 
 def swap_screens():
